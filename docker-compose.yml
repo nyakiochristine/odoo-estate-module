@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  # 1. The Database Service (Matched to your local v14)
+  db:
+    image: postgres:14
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=odoo
+      - POSTGRES_PASSWORD=odoo_password
+    volumes:
+      - odoo-db-data:/var/lib/postgresql/data
+
+  # 2. The Odoo Engine Service (Updated to v19)
+  web:
+    image: odoo:19.0
+    depends_on:
+      - db
+    ports:
+      - "8069:8069"
+    environment:
+      - HOST=db
+      - USER=odoo
+      - PASSWORD=odoo_password
+    volumes:
+      - odoo-web-data:/var/lib/odoo
+      - ./custom_addon:/mnt/extra-addons # Mounts your custom folder
+
+volumes:
+  odoo-db-data:
+  odoo-web-data:
