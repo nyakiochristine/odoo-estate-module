@@ -1,3 +1,4 @@
+
 # Odoo Real Estate Advertisement Module (`estate`)
 
 A fully functional Odoo 19.0 custom module built from scratch to manage real estate property listings, tracking, configurations, and sales workflows. This module acts as a complete blueprint demonstrating the foundational concepts of the Odoo Server Framework.
@@ -19,16 +20,16 @@ A fully functional Odoo 19.0 custom module built from scratch to manage real est
 | Component | Technology / Concept |
 | :--- | :--- |
 | **Backend Framework** | Odoo 19.0 ORM (Python 3.11+) |
-| **Database** | PostgreSQL |
+| **Database** | PostgreSQL 14 |
+| **Containerization** | Docker / Docker Compose |
 | **UI Presentation** | Form, List, and Search Views (XML) |
 | **Access Control** | Odoo Security Layer (CSV Rules) |
-| **Data Architecture** | `Many2one`, `One2many`, `Many2many`, `TransientModel` |
 
 ---
 
 ## 📂 Repository Structure
 
-```text
+
 estate/
 ├── __init__.py
 ├── __manifest__.py            # Module description, metadata, and data loading order
@@ -46,17 +47,59 @@ estate/
     ├── cancel_wizard.py       # Transient wizard business logic code
     └── cancel_wizard_views.xml# Popup view layer interface definition
 
-## 💻 Installation & Local Setup
+```
+
+---
+
+## 💻 Installation & Environment Setup (Docker)
+
+This project is fully containerized using Docker Compose. Follow these steps to spin up the Odoo server and PostgreSQL database instantly without configuring local Python or Postgres dependencies.
 
 ### Prerequisites
-* A running instance of Odoo 19.0
-* Local Python 3.11 environment configured (`odoo-env`)
-* PostgreSQL service active
 
-### Installation Steps
+* [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running on your host system.
 
-1. Navigate to your main Odoo development directory:
-   ```bash
- 2. Ensure this custom_addon repository folder exists parallel to your core odoo directory.
+### Quick Start Instructions
 
- 
+1. **Clone the project** and ensure your custom addon folder structure matches this relative mounting path:
+
+```text
+   odoo-dev/
+   ├── docker-compose.yml
+   └── custom_addon/
+       └── estate/
+
+```
+
+2. **Navigate to your workspace root directory** in your terminal:
+
+```bash
+   cd path/to/your/odoo-dev
+
+```
+
+3. **Boot up the containers** by running the following command:
+
+```bash
+   docker compose up -d
+
+```
+
+4. **Access the application** by navigating to your browser:
+👉 **`http://localhost:8069`**
+5. **Initialize the Database:**
+* **Master Password:** Use the master password displayed on screen or set a new one.
+* **Database Name:** `estate_db`
+* **Email / Password:** `admin` / `admin`
+
+
+6. **Install the Module:**
+* Navigate to **Settings** and scroll down to click **Activate the developer mode**.
+* Go to the **Apps** dashboard, click **Update Apps List** in the top navigation bar, and select **Update**.
+* Clear the default `Apps` filter from the search bar, type `estate`, and click **Activate** on the Real Estate Management module!
+
+
+
+```
+
+```
