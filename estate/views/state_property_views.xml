@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- 1. ACTION -->
+    <record id="estate_property_action" model="ir.actions.act_window">
+        <field name="name">Properties</field>
+        <field name="res_model">estate.property</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- 2. LIST VIEW -->
+    <record id="estate_property_view_list" model="ir.ui.view">
+        <field name="name">estate.property.list</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <list string="Properties">
+                <field name="name"/>
+                <field name="postcode"/>
+                <field name="bedrooms"/>
+                <field name="living_area"/>
+                <field name="expected_price"/>
+                <field name="selling_price"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- 3. FORM VIEW (Includes all your fields) -->
+    <record id="estate_property_view_form" model="ir.ui.view">
+        <field name="name">estate.property.form</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <form string="Property">
+                <header>
+                    <button name="action_sold" type="object" string="Sold" invisible="state == 'sold' or state == 'canceled'"/>
+                    <button name="action_cancel" type="object" string="Cancel" invisible="state == 'sold' or state == 'canceled'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="new,offer_received,offer_accepted,sold,canceled"/>
+                    
+                </header>
+                <sheet>
+                    <h1><field name="name"/></h1>
+                    <group>
+                        <field name="property_type_id"/>
+                        <field name="postcode"/>
+                        <field name="date_availability"/>
+                        <field name="expected_price"/>
+                        <field name="selling_price"/>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <group>
+                                <field name="tag_ids" widget="many2many_tags"/>
+                                <field name="description"/>
+                                <field name="bedrooms"/>
+                                <field name="living_area"/>
+                                <field name="facades"/>
+                                <field name="garage"/>
+                                <field name="garden"/>
+                                <field name="garden_area"/>
+                                <field name="total_area"/>
+                                <field name="garden_orientation"/>
+                            </group>
+                        </page>
+                        <page string="Other Info">
+                          <group>
+                            <field name="user_id"/>
+                            <field name="partner_id"/>
+                          </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- 4. FORM VIEW FOR PROPERTY TYPE (The fix for your popup) -->
+    <record id="estate_property_type_view_form" model="ir.ui.view">
+        <field name="name">estate.property.type.form</field>
+        <field name="model">estate.property.type</field>
+        <field name="arch" type="xml">
+            <form string="Property Type">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- 5. SEARCH VIEW -->
+    <record id="estate_property_view_search" model="ir.ui.view">
+        <field name="name">estate.property.search</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <search string="Properties">
+                <field name="name" string="Title"/>
+                <field name="postcode"/>
+                <field name="expected_price"/>
+                <field name="bedrooms"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- 6. MENUS -->
+    <menuitem id="estate_menu_root" name="Real Estate"/>
+    <menuitem id="estate_menu_advertisements" name="Advertisements" parent="estate_menu_root" />
+    <menuitem id="estate_property_menu" name="Properties" parent="estate_menu_advertisements" action="estate_property_action"/>
+</odoo>
